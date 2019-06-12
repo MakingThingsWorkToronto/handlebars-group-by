@@ -35,6 +35,7 @@ function groupBy(handlebars) {
 		 * @param {Object} options
 		 * @param {Object} options.hash
 		 * @param {String} options.hash.by
+		 * @param {String} options.hash.sort
 		 * @return {String} Rendered partial.
 		 */
 		group: function (list, options) {
@@ -44,6 +45,7 @@ function groupBy(handlebars) {
 				inverse = options.inverse || noop,
 				hash = options.hash,
 				prop = hash && hash.by,
+				sort = hash && hash.sort,
 				keys = [],
 				groups = {};
 
@@ -74,6 +76,12 @@ function groupBy(handlebars) {
 
 			list.forEach(groupKey);
 
+			keys = keys.sort(
+				sort == "desc" 
+					? (a, b) => (a > b ? -1 : 1)
+					: (a, b) => (a > b ? 1 : -1)
+			);
+
 			return keys.reduce(renderGroup, '');
 		}
 	};
@@ -95,6 +103,3 @@ groupBy.register = groupBy;
 
 // Legacy
 module.exports = groupBy;
-
-},{}]},{},[1])(1)
-});
