@@ -77,8 +77,8 @@ function groupBy(handlebars) {
 
 			keys = keys.sort(
 				sort == "desc" 
-					? (a, b) => (a > b ? -1 : 1)
-					: (a, b) => (a > b ? 1 : -1)
+					? function(a, b){ return (a > b ? -1 : 1); }
+					: function(a, b){ return (a > b ? 1 : -1); }
 			);
 
 			return keys.reduce(renderGroup, '');
